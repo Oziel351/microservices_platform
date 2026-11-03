@@ -1,11 +1,17 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import {
+  globalLimiter,
+  productsLimiter,
+  usersLimiter,
+} from "./middleware/rate-limite";
 import productsRouter from "./router/products/products.route";
 import usersRouter from "./router/users/users.route";
 
 const app = express();
 
 app.use(cors());
+app.use(globalLimiter);
 app.use(express.json());
 
 //Basic check health endpoint
@@ -19,7 +25,7 @@ app.get("/health", (req: Request, res: Response) => {
 
 //Use per-service limiters to ensure resource management for each
 //Can add more and more services, also create a file to manate all the routes instead of
-app.use("/api/products", productsRouter);
-app.use("/api/users", usersRouter);
+app.use("/api/products", productsLimiter, productsRouter);
+app.use("/api/users", usersLimiter, usersRouter);
 
 export default app;
