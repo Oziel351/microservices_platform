@@ -26,14 +26,20 @@ interface Config {
   port: number;
   services: ISERVICES;
   nodeEnv: string;
-  jwt: string;
+  jwtToken: string;
+}
+
+// Fail fast: never start with a missing or default secret.
+const jwtToken = process.env.JWT_TOKEN;
+if (!jwtToken) {
+  throw new Error("Missing required environment variable: JWT_TOKEN");
 }
 
 const config: Config = {
-  port: parseInt(process.env.PORT || "3000", 10),
+  port: parseInt(process.env.PORT || "4000", 10),
   services: Services,
   nodeEnv: process.env.NODE_ENV || "development",
-  jwt: process.env.JWT_TOKEN || "jwthere",
+  jwtToken,
 };
 
 export default config;
