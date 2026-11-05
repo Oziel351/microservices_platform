@@ -31,16 +31,16 @@ export class HttpClient {
     return this.connection.get(url, config);
   }
 
-  async post(url: string, config?: AxiosRequestConfig) {
-    return this.connection.post(url, config);
+  async post<T>(url: string, data: T, config?: AxiosRequestConfig) {
+    return this.connection.post(url, data, config);
   }
 
-  async patch(url: string, config?: AxiosRequestConfig) {
-    return this.connection.patch(url, config);
+  async patch<T>(url: string, data: T, config?: AxiosRequestConfig) {
+    return this.connection.patch(url, data, config);
   }
 
-  async put(url: string, config?: AxiosRequestConfig) {
-    return this.connection.put(url, config);
+  async put<T>(url: string, data: T, config?: AxiosRequestConfig) {
+    return this.connection.put(url, data, config);
   }
   async delete(url: string, config?: AxiosRequestConfig) {
     return this.connection.delete(url, config);
